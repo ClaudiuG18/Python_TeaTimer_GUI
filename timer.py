@@ -10,8 +10,8 @@ def Reset():
     running = False
     label_m.config(text="0")
     label_s.config(text="0")
-    spin_min.configure(textvariable="0")
-    spin_sec.configure(textvariable="0")
+    spin_min.configure(textvariable ="0")
+    spin_sec.configure(textvariable ="" )
 
 def Start():
     global running 
