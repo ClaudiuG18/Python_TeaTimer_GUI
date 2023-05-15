@@ -4,24 +4,26 @@ from types import NoneType
 m_min = 0
 s_sec = 0
 running = False
+
 # ----------------------------------------------TIMER LOGIC------------------------------------------------#
 def Reset():
     global running
     running = False
-    label_m.config(text="0")
-    label_s.config(text="0")
-    spin_min.configure(textvariable ="0")
-    spin_sec.configure(textvariable ="" )
+    var1.set(0)
+    var2.set(0)
+    var3.set(0)
+    var4.set(0)
+   
 
 def Start():
     global running 
     running = True
     timerLogic(int(m_min), int (s_sec))
     
-
 def timerLogic(minutes, seconds):
     global running
-    label_m.config(text=minutes)
+    var3.set(minutes)
+    var4.set(seconds)
     label_s.config(text=seconds)
     if running:
         if seconds > 0:
@@ -33,23 +35,21 @@ def timerLogic(minutes, seconds):
 
 
 
-    
-
-
-    
 # ---------------------------------------------UI SETUP---------------------------------------------------#
 window = Tk()
 window.title("TeaTimer")
 window.minsize(width=300, height=250)
-
-
+var1 = IntVar(window)
+var2 = IntVar(window)
+var3 = IntVar(window)
+var4 = IntVar(window)
 
 # Timer Label
 label_timer = Label(text="Timer", font=("arial", 20, "bold"))
 label_timer.place(x=100, y=20)
 
 # Create label for changeable min
-label_m = Label(text="0", font=("arial", 30, "bold"))
+label_m = Label(textvariable= var3 , font=("arial", 30, "bold"))
 label_m.place(x=100, y=70)
 
 # Create label for separator
@@ -57,7 +57,7 @@ label_sep = Label(text=":", font=("arial", 30, "bold"))
 label_sep.place(x=140, y=70)
 
 # Create label for changeable sec
-label_s = Label(text="0", font=("arial", 30, "bold"))
+label_s = Label(textvariable= var4, font=("arial", 30, "bold"))
 label_s.place(x=170, y=70)
 
 
@@ -70,7 +70,7 @@ def Spinmin_used():
 
 
 # Spin box min
-spin_min = Spinbox(from_=0, to=59, font=("arial", 16), width=2,command=Spinmin_used)
+spin_min = Spinbox(from_=0, to=59, font=("arial", 16), textvariable=var1, width=2,command=Spinmin_used)
 spin_min.place(x=90, y=120)
 label_min = Label(text="Min", font=("arial", 20))
 label_min.place(x=90, y=150)
@@ -83,7 +83,7 @@ def Spinsec_used():
 
 
 # Spin box sec
-spin_sec = Spinbox(from_=0, to=59, font=("arial", 16), width=2, command=Spinsec_used)
+spin_sec = Spinbox(from_=0, to=59, font=("arial", 16), textvariable=var2, width=2, command=Spinsec_used)
 spin_sec.place(x=160, y=120)
 label_sec = Label(text="Sec", font=("arial", 20))
 label_sec.place(x=160, y=150)
