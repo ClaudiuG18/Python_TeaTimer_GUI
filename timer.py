@@ -1,27 +1,41 @@
 from tkinter import *
+from types import NoneType
 
 m_min = 0
 s_sec = 0
+running = False
 # ----------------------------------------------TIMER LOGIC------------------------------------------------#
+def Reset():
+    global running
+    running = False
+    label_m.config(text="0")
+    label_s.config(text="0")
+    spin_min.configure(textvariable="0")
+    spin_sec.configure(textvariable="0")
+
 def Start():
+    global running 
+    running = True
     timerLogic(int(m_min), int (s_sec))
+    
 
 def timerLogic(minutes, seconds):
+    global running
     label_m.config(text=minutes)
     label_s.config(text=seconds)
-    if seconds > 0:
-        window.after(1000, timerLogic, minutes, seconds - 1)
-    elif minutes != 0 and seconds == 0:
-        window.after(0, timerLogic, minutes - 1, seconds + 59)
+    if running:
+        if seconds > 0:
+            window.after(1000, timerLogic, minutes, seconds - 1)
+        elif minutes != 0 and seconds == 0:
+            window.after(0, timerLogic, minutes - 1, seconds + 59)
+    else:
+        window.after_cancel(timerLogic)
 
-#----------------------------------------------RESET LOGIC------------------------------------------------#
-def Reset():
-    reset_logic(int(m_min), int(s_sec))
 
 
-def reset_logic(mins1,secs1):
     
-    window.after(0,reset_logic)
+
+
     
 # ---------------------------------------------UI SETUP---------------------------------------------------#
 window = Tk()
@@ -56,7 +70,7 @@ def Spinmin_used():
 
 
 # Spin box min
-spin_min = Spinbox(from_=0, to=59, font=("arial", 16), width=2, command=Spinmin_used)
+spin_min = Spinbox(from_=0, to=59, font=("arial", 16), width=2,command=Spinmin_used)
 spin_min.place(x=90, y=120)
 label_min = Label(text="Min", font=("arial", 20))
 label_min.place(x=90, y=150)
